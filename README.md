@@ -2,6 +2,8 @@
 
 LaporHub adalah backend RESTful API untuk sistem pelaporan masyarakat. Project ini dibangun menggunakan arsitektur pemisahan *backend* dan *frontend*, dengan fokus pada keamanan, manajemen peran (Role-based Access), dan kecepatan respon data.
 
+**Catatan:** Repository ini murni berisi **Backend (REST API)**. Didesain secara *headless* agar siap dikonsumsi oleh berbagai platform Frontend (React, Vue, Mobile App, dll).
+
 ## Tech Stack & Fitur
 * **Framework:** Laravel 13 (PHP 8.3+)
 * **Database:** MySQL
@@ -9,7 +11,7 @@ LaporHub adalah backend RESTful API untuk sistem pelaporan masyarakat. Project i
 * **Environment:** Laravel Sail (Docker)
 * **Fitur Utama:** Multi-Role (Admin, Petugas, Masyarakat), Upload Gambar, Middleware Gatekeeping.
 
-**[Klik di sini untuk melihat Dokumentasi Postman LaporHub API]  
+**[Klik di sini untuk melihat Dokumentasi Postman LaporHub API]**  
 https://crimson-satellite-1456435.postman.co/workspace/kkh's-Workspace~513eca4e-75f6-45a2-8afd-b1b7c048edb9/collection/51063118-56413ec8-9545-4578-acdf-e0a2f58624b9?action=share&source=copy-link&creator=51063118**
 
 
