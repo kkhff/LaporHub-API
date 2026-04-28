@@ -12,7 +12,7 @@ LaporHub adalah backend RESTful API untuk sistem pelaporan masyarakat. Project i
 * **Fitur Utama:** Multi-Role (Admin, Petugas, Masyarakat), Upload Gambar, Middleware Gatekeeping.
 
 **[Klik di sini untuk melihat Dokumentasi Postman LaporHub API]**  
-https://crimson-satellite-1456435.postman.co/workspace/kkh's-Workspace~513eca4e-75f6-45a2-8afd-b1b7c048edb9/collection/51063118-56413ec8-9545-4578-acdf-e0a2f58624b9?action=share&source=copy-link&creator=51063118**
+https://crimson-satellite-1456435.postman.co/workspace/kkh's-Workspace~513eca4e-75f6-45a2-8afd-b1b7c048edb9/collection/51063118-56413ec8-9545-4578-acdf-e0a2f58624b9?action=share&source=copy-link&creator=51063118
 
 
 ## Cara Menjalankan Project (Lokal)
