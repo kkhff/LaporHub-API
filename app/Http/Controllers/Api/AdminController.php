@@ -35,7 +35,7 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
         $request->validate([
-            'role' => 'required|in:petugas,admin,masyarakat'
+            'role' => 'required|in:petugas,masyarakat'
         ]);
 
 

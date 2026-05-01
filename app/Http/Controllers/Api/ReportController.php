@@ -42,7 +42,7 @@
             ]);
 
             $image = $request->file('image');
-            $path = $image->store('public/reports');
+            $image->store('reports', 'public');
             $filename = $image->hashName();
 
             $report = Report::create([
@@ -97,7 +97,7 @@
                 Storage::delete('public/reports/' . $report->image);
 
                 $image = $request->file('image');
-                $path = $image->store('public/reports');
+                $image->store('reports', 'public');
                 $filename = $image->hashName();
             }
             $report->update([
@@ -128,7 +128,7 @@
                 ], 403);
             }
 
-            Storage::delete('public/reports/' . $report->image);
+            Storage::disk('public')->delete('reports/' . $report->image);
 
             $report->delete();
 
@@ -158,7 +158,7 @@
 
         public function myReports(Request $request)
         {
-            $query = Report::where('user_id' ,$request->user()->id);
+            $query = Report::with(['category'])->where('user_id' ,$request->user()->id);
             if ($request->has('status')){
                 $query->where('status', $request->status);
             }
