@@ -51,7 +51,8 @@ docker run --rm \
 ```bash
 ./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan storage:link
-./vendor/bin/sail artisan migrate --seed
+./vendor/bin/sail artisan db:seed --class=UserSeeder
+./vendor/bin/sail artisan db:seed --class=CategorySeeder
 ```
 
 ## Akun Testing (Hasil Seeder)

@@ -18,3 +18,7 @@ Route::get('/storage/reports/{filename}', function ($filename) {
 
     return $response;
 });
+
+Route::get('/', function () {
+    return view('welcome');
+});
