@@ -35,13 +35,21 @@ class AdminController extends Controller
     public function updateRole(Request $request, $id)
     {
         $targetUser = User::findOrFail($id);
+        $user = auth()->user();
         $request->validate([
             'role' => 'required|in:petugas,masyarakat,admin'
         ]);
 
-        Gate::authorize('updateRole', $targetUser);
+        if ($targetUser->hasRole($request->role)) {
+            return response()->json([
+                'message' => 'Role tidak boleh sama!',
+            ], 400);
+        }
 
-        $targetUser->syncRole($request->role);
+
+        Gate::authorize('updateRole', [$targetUser, $request->role]);
+
+        $targetUser->syncRoles($request->role);
 
         $targetUser->refresh();
 

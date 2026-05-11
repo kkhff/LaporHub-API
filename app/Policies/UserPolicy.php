@@ -63,13 +63,13 @@ class UserPolicy
         return false;
     }
 
-    public function updateRole(User $authUser, User $targetUser)
+    public function updateRole(User $authUser, User $targetUser, String $requestedRole)
     {
-        if ($authUser->hasRole('super-admin')) {
+        if ($authUser->hasRole('super-admin') && !$targetUser->hasRole('super-admin')) {
             return true;
         }
 
-        if ($targetUser->hasAnyRole('super-admin','admin')){
+        if ($targetUser->hasAnyRole(['super-admin','admin']) || $requestedRole == 'admin'){
             return false;
         }
 
