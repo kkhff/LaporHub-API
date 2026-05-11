@@ -29,11 +29,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('reports', ReportController::class);
 });
 
-Route::middleware(['auth:sanctum', 'role:admin,petugas'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:super-admin|admin|petugas'])->group(function () {
     Route::patch('/reports/{id}/status', [ReportController::class, 'updateStatus']);
-    Route::get('/admin/stats', [AdminController::class, 'index'])->middleware('role:admin');
-    Route::get('/admin/users', [AdminController::class, 'showUser'])->middleware('role:admin');
-    Route::patch('/admin/{id}/role', [AdminController::class, 'updateRole'])->middleware('role:admin');
+    Route::get('/admin/stats', [AdminController::class, 'index'])->middleware('role:admin|super-admin');
+    Route::get('/admin/users', [AdminController::class, 'showUser'])->middleware('role:admin|super-admin');
+    Route::patch('/admin/{id}/role', [AdminController::class, 'updateRole'])->middleware('role:admin|super-admin');
 });
 
 

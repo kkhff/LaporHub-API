@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 use App\Models\Report;
 use App\Http\Resources\UserResource;
@@ -14,9 +15,9 @@ class AdminController extends Controller
     {
         $totalReports = Report::count();
         $pending = Report::where('status', 'pending')->count();
-        $admin = User::where('role', 'admin')->count();
-        $masyarakat = User::where('role', 'masyarakat')->count();
-        $petugas = User::where('role', 'petugas')->count();
+        $admin = User::role('admin')->count();
+        $masyarakat = User::role('masyarakat')->count();
+        $petugas = User::role('petugas')->count();
 
         return response()->json([
             'success' => true,
@@ -33,29 +34,23 @@ class AdminController extends Controller
     }
     public function updateRole(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $targetUser = User::findOrFail($id);
         $request->validate([
-            'role' => 'required|in:petugas,masyarakat'
+            'role' => 'required|in:petugas,masyarakat,admin'
         ]);
 
+        Gate::authorize('updateRole', $targetUser);
 
-        if($request->user()->id ==$id) {
-            return response()->json([
-                'message' => 'Anda tidak dapat merubah role sendiri!'
-            ], 403);
-        }
+        $targetUser->syncRole($request->role);
 
-        $user->update([
-            'role' => $request->role,
-        ]);
+        $targetUser->refresh();
 
-        $user->refresh();
-
-        return (new UserResource($user))->additional([
+        return (new UserResource($targetUser))->additional([
             'success' => true,
-            'message' => "Berhasil! sekarang {$user->name} adalah {$request->role}",
+            'message' => "Berhasil! sekarang {$targetUser->name} adalah {$request->role}",
         ]);
     }
+
     public function showUser()
     {
         $users = User::latest()->paginate(10);
