@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -12,19 +13,34 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::create([
-            'name' => 'Admin LaporHub',
+
+        $superAdmin = User::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@laporhub.com',
+            'password' => bcrypt('password123'),
+        ]);
+        $superAdmin->assignRole('super-admin');
+
+        $admin = User::create([
+            'name' => 'kevin',
             'email' => 'admin@laporhub.com',
             'password' => bcrypt('password123'),
-            'role' => 'admin',
         ]);
+        $admin->assignRole('admin');
 
-        \App\Models\User::create([
-            'name' => 'Petugas Gantenk',
+        $petugas = User::create([
+            'name' => 'evan',
             'email' => 'petugas@laporhub.com',
             'password' => bcrypt('password123'),
-            'role' => 'petugas',
         ]);
+        $petugas->assignRole('petugas');
+
+        $masyarakat = User::create([
+            'name' => 'john doe',
+            'email' => 'masyarakat@laporhub.com',
+            'password' => bcrypt('password123'),
+        ]);
+        $masyarakat->assignRole('masyarakat');
 
     }
 }
