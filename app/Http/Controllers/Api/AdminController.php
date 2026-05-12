@@ -65,3 +65,4 @@ class AdminController extends Controller
         return UserResource::collection($users);
     }
 }
+

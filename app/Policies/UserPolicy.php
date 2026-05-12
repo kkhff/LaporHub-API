@@ -76,3 +76,4 @@ class UserPolicy
         return true;
     }
 }
+
