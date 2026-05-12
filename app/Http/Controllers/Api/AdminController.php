@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 use App\Models\User;
 use App\Models\Report;
 use App\Http\Resources\UserResource;
+use App\Notifications\AdminActionNotification;
 
 class AdminController extends Controller
 {
@@ -51,12 +53,49 @@ class AdminController extends Controller
 
         $targetUser->syncRoles($request->role);
 
+        $admins = User::role(['admin', 'super-admin'])->where('id', '!=', $user->id)->get();
+
+        $details = [
+            'action' => 'updateRole',
+            'admin_name' => $user->name,
+            'target_name' => $targetUser->name,
+        ];
+
+        Notification::send($admins, new AdminActionNotification($details));
+
         $targetUser->refresh();
 
         return (new UserResource($targetUser))->additional([
             'success' => true,
             'message' => "Berhasil! sekarang {$targetUser->name} adalah {$request->role}",
         ]);
+    }
+
+    public function destroyUser($id)
+    {
+        $targetUser = User::findOrFail($id);
+        $user = auth()->user();
+
+        Gate::authorize('destroyUser', $targetUser);
+
+        $admins = User::role(['admin', 'super-admin'])->where('id', '!=', $user->id)->get();
+
+        $details = [
+            'action' => 'destroyUser',
+            'admin_name' => $user->name,
+            'target_name' => $targetUser->name,
+        ];
+
+        $targetUser->tokens()->delete();
+        $targetUser->delete();
+
+        Notification::send($admins, new AdminActionNotification($details));
+
+        return response()->json([
+            'success' => true,
+            'message' => "Berhasil! akun dengan nama {$targetUser->name} dihapus",
+        ]);
+
     }
 
     public function showUser()

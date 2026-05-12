@@ -75,5 +75,18 @@ class UserPolicy
 
         return true;
     }
+
+    public function destroyUser(User $authUser, User $targetUser)
+    {
+        if ($authUser->hasRole('super-admin') && !$targetUser->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($targetUser->hasAnyRole(['super-admin','admin'])){
+            return false;
+        }
+
+        return true;
+    }
 }
 
