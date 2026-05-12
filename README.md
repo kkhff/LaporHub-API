@@ -51,13 +51,13 @@ docker run --rm \
 ```bash
 ./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan storage:link
-./vendor/bin/sail artisan migrate
-./vendor/bin/sail artisan db:seed --class=UserSeeder
-./vendor/bin/sail artisan db:seed --class=CategorySeeder
+./vendor/bin/sail artisan migrate --seed
 ```
 
 ## Akun Testing (Hasil Seeder)
 | Role | Email | Password |
 | :--- | :--- | :--- |
-| Admin | `admin@laporhub.com` | password123 |
+| super-admin | `superadmin@laporhub.com` | password123 |
+| admin | `admin@laporhub.com` | password123 |
 | Petugas | `petugas@laporhub.com` | password123 |
+| masyarakat | `masyarakat@laporhub.com` | password123 |
