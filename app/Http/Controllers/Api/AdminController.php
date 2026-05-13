@@ -51,7 +51,6 @@ class AdminController extends Controller
 
         Gate::authorize('updateRole', [$targetUser, $request->role]);
 
-        $targetUser->syncRoles($request->role);
 
         $admins = User::role(['admin', 'super-admin'])->where('id', '!=', $user->id)->get();
 
@@ -59,10 +58,13 @@ class AdminController extends Controller
             'action' => 'updateRole',
             'admin_name' => $user->name,
             'target_name' => $targetUser->name,
+            'old_role' => $targetUser->getRoleNames()->first(),
+            'new_role' => $request->role,
         ];
 
         Notification::send($admins, new AdminActionNotification($details));
 
+        $targetUser->syncRoles($request->role);
         $targetUser->refresh();
 
         return (new UserResource($targetUser))->additional([
@@ -84,6 +86,7 @@ class AdminController extends Controller
             'action' => 'destroyUser',
             'admin_name' => $user->name,
             'target_name' => $targetUser->name,
+            'role' => $targetUser->getRoleNames()->first(),
         ];
 
         $targetUser->tokens()->delete();

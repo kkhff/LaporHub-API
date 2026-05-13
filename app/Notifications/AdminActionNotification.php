@@ -11,6 +11,8 @@ class AdminActionNotification extends Notification
 {
     use Queueable;
 
+    public $details;
+
     /**
      * Create a new notification instance.
      */
@@ -33,15 +35,17 @@ class AdminActionNotification extends Notification
     {
         return match ($this->details['action']) {
             'updateRole' => [
-                'message' => $this->details['admin_name'] . ' telah mengubah role ' . $this->details['target_name'],
+                'action' => 'Update Role',
+                'message' => "{$this->details['admin_name']} telah merubah role {$this->details['target_name']} dari {$this->details['old_role']} ke {$this->details['new_role']}",
             ],
             'destroyUser' => [
-                'message' => $this->details['admin_name'] . ' telah mengahpus akun ' . $this->details['target_name'],
+                'action' => 'Destroy User',
+                'message' => "{$this->details['admin_name']} telah menghapus akun {$this->details['target_name']} dengan role {$this->details['role']}",
             ],
             default => [
                 'message' => 'aksi tidak dikenal'
             ],
-        }
+        };
     }
 
     /**
