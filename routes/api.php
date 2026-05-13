@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\NotificationController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -34,6 +35,9 @@ Route::middleware(['auth:sanctum', 'role:super-admin|admin|petugas'])->group(fun
     Route::get('/admin/stats', [AdminController::class, 'index'])->middleware('role:admin|super-admin');
     Route::get('/admin/users', [AdminController::class, 'showUser'])->middleware('role:admin|super-admin');
     Route::patch('/admin/{id}/role', [AdminController::class, 'updateRole'])->middleware('role:admin|super-admin');
+    Route::delete('/admin/{id}/delete', [AdminController::class, 'destroyUser'])->middleware('role:admin|super-admin');
+    Route::get('/admin/notif', [NotificationController::class, 'index'])->middleware('role:admin|super-admin');
+    Route::get('/admin/notif/read', [NotificationController::class, 'markAsRead'])->middleware('role:admin|super-admin');
 });
 
 
