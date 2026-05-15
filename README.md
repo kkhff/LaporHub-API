@@ -8,8 +8,16 @@ LaporHub adalah backend RESTful API untuk sistem pelaporan masyarakat. Project i
 * **Framework:** Laravel 13 (PHP 8.3+)
 * **Database:** MySQL
 * **Authentication:** Laravel Sanctum (Bearer Token)
+* **Role & Permission:** Spatie Laravel-Permission
+* **Excel Export:** Maatwebsite/Excel
 * **Environment:** Laravel Sail (Docker)
 * **Fitur Utama:** Multi-Role (Admin, Petugas, Masyarakat), Upload Gambar, Middleware Gatekeeping.
+
+## Fitur Utama (V2 Updates)
+* Advanced RBAC (Role-Based Access Control): Menggunakan Spatie untuk hierarki hak akses (Super Admin, Admin, Petugas, Masyarakat) yang aman dengan sistem perlindungan Anti-Kudeta melalui Laravel Policy.
+* Audit Trail & Database Notifications: Sistem pelacakan aktivitas. Setiap kali Admin menghapus pengguna atau mengubah role, sistem akan mencatat action tersebut dan mengirimkan notifikasi real-time (ke database) kepada jajaran Admin lainnya.
+* Export Laporan (Excel): Menghasilkan rekap data laporan secara dinamis (Auto-Size columns) berformat .xlsx untuk kebutuhan pelaporan eksekutif.
+* RESTful Standards: Penggunaan HTTP Status Code yang tepat, API Resources untuk response JSON yang konsisten, dan perlindungan route menggunakan Gate & Middleware.
 
 **[Klik di sini untuk melihat Dokumentasi Postman LaporHub API]**  
 https://crimson-satellite-1456435.postman.co/workspace/kkh's-Workspace~513eca4e-75f6-45a2-8afd-b1b7c048edb9/collection/51063118-56413ec8-9545-4578-acdf-e0a2f58624b9?action=share&source=copy-link&creator=51063118

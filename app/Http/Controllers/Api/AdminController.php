@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 use App\Models\Report;
 use App\Http\Resources\UserResource;
 use App\Notifications\AdminActionNotification;
+use App\Exports\ReportExport;
 
 class AdminController extends Controller
 {
@@ -105,6 +107,11 @@ class AdminController extends Controller
     {
         $users = User::latest()->paginate(10);
         return UserResource::collection($users);
+    }
+
+    public function exportReports()
+    {
+        return Excel::download(new ReportExport, 'data-laporan.xlsx');
     }
 }
 
