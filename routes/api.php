@@ -38,6 +38,7 @@ Route::middleware(['auth:sanctum', 'role:super-admin|admin|petugas'])->group(fun
     Route::delete('/admin/{id}/delete', [AdminController::class, 'destroyUser'])->middleware('role:admin|super-admin');
     Route::get('/admin/notif', [NotificationController::class, 'index'])->middleware('role:admin|super-admin');
     Route::get('/admin/notif/read', [NotificationController::class, 'markAsRead'])->middleware('role:admin|super-admin');
+    Route::get('/admin/reports/export', [AdminController::class, 'exportReports'])->middleware('role:admin|super-admin');
 });
 
 
